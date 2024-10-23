@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KE-Rechner</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif; 
+            background-color: #121212; 
+            margin: 0;
+            padding: 0;
+            color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden; 
+        }
+
+        .container {
+            max-width: 600px; 
+            width: 100%;
+            height: 70%;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            position: relative;
+            margin-top: 20px;
+            overflow: auto; 
+        }
+
+        h2 {
+            text-align: center;
+            color: #778899;
+            margin: 20px 0 30px;
+            font-weight: 900;
+            font-size: 40px; 
+            letter-spacing: 1px;
+        }
+
+        input, select, button, #totalKEBox, #totalWeightBox {
+            width: 100%;
+            height: 50px;
+            margin: 10px 0; 
+            padding: 10px;
+            font-size: 24px; 
+            border: none;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            box-sizing: border-box;
+            font-weight: 700;
+        }
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input:focus, button:focus {
+            outline: none;
+            box-shadow: 0 0 5px #778899;
+        }
+
+        button {
+            background-color: #778899;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 900;
+            font-size: 26px; 
+            height: 60px; 
+        }
+
+        button:hover {
+            background-color: #4d6469;
+        }
+
+        #foodSuggestions {
+            max-height: 200px;
+            background-color: #333;
+            position: relative;
+            width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: none;
+            color: #f4f4f4;
+            font-weight: 700;
+            overflow: hidden;
+        }
+
+        #foodSuggestions div {
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 20px;
+            color: #e0e0e0;
+        }
+
+        #foodSuggestions div:hover {
+            background-color: #555;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 20px;
+            width: 100%;
+            background: #1e1e1e;
+        }
+
+        ul li {
+            background: #2a2a2a;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 8px;
+            color: #cccccc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-sizing: border-box;
+            font-size: 22px; 
+            font-weight: 700;
+            height: 50px;
+        }
+
+        .delete-btn {
+            background-color: transparent;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #ff4d4d;
+        }
+
+        .delete-icon {
+            fill: white; 
+            width: 20px; 
+            height: 20px; 
+            transition: transform 0.3s ease;
+        }
+
+        .delete-btn:hover .delete-icon {
+            transform: scale(1.1); 
+        }
+
+        #totalKEBox, #totalWeightBox {
+            text-align: center;
+            background-color: transparent;
+            color: #778899;
+            height: 50px; 
+            line-height: 50px;
+            font-size: 24px; 
+            font-weight: 900;
+            width: 100%;
+            margin-top: 30px; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #portionLabel {
+            text-align: center;
+            font-size: 22px; 
+            color: #e0e0e0;
+            margin-top: 5px; 
+            display: none;
+            font-weight: 900;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 25px;
+                margin-top: 20px;
+                height: 70%;
+            }
+
+            h2 {
+                font-size: 34px; 
+            }
+
+            input, button, #totalKEBox, #totalWeightBox {
+                height: 50px;
+                font-size: 22px; 
+            }
+
+            ul li {
+                font-size: 20px; 
+            }
+
+            #portionLabel {
+                font-size: 18px; 
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kohlenhydrate Rechner</h2>
+    <input type="text" id="foodSearch" placeholder="Lebensmittel suchen..." oninput="showSuggestions()">
+    <div id="foodSuggestions"></div>
+    <input type="number" id="foodAmount" placeholder="Menge in gramm" min="1">
+    <button onclick="addFood()">Berechnen</button>
+    
+    <ul id="foodList"></ul>
+
+    <div id="totalKEBox">Gesamt KE: 0 KE</div>
+    <div id="totalWeightBox">Gesamtgewicht: 0 g</div>
+    <label id="portionLabel">Anzahl der Lebensmittel: <span id="portionSize">0</span></label>
+</div>
+
+<script>
+    const foodData = {
+        "Weizenbrot": 50,       
+        "Reis": 25,       
+        "Pellkartoffeln": 1.5, 
+        "Nudeln (eihaltig)": 23,     
+        "Apfel": 10,      
+        "Banane": 12.5,     
+        "Zucker": 100,    
+               
+            
+             
+               
+                
+        "": 5       
+    };
+
+    let totalKE = 0;
+    let totalWeight = 0;
+    let foodList = [];
+
+    function addFood() {
+        const foodSearch = document.getElementById("foodSearch").value;
+        const foodAmount = parseFloat(document.getElementById("foodAmount").value);
+
+        if (!foodData[foodSearch] || isNaN(foodAmount) || foodAmount <= 0) {
+            alert("Bitte ein gültiges Lebensmittel und eine Menge eingeben.");
+            return;
+        }
+
+        const kePer100g = foodData[foodSearch];
+        const totalWeight = foodAmount; 
+        const totalKEOfFood = (foodAmount / 100) * kePer100g / 10; 
+
+        foodList.push({ name: foodSearch, amount: totalKEOfFood, totalWeight: totalWeight });
+
+        updateFoodList();
+        updateTotals();
+
+        
+        document.getElementById("foodSearch").value = "";
+        document.getElementById("foodAmount").value = "";
+    }
+
+    function updateFoodList() {
+        const foodListElement = document.getElementById("foodList");
+        foodListElement.innerHTML = "";
+
+        foodList.forEach((food, index) => {
+            const li = document.createElement("li");
+            li.textContent = `${food.name} - ${food.amount.toFixed(2)} KE, ${food.totalWeight} g`;
+
+            const deleteButton = document.createElement("button");
+            deleteButton.className = "delete-btn";
+            deleteButton.innerHTML = `<svg class="delete-icon" viewBox="0 0 24 24"><path d="M20 4h-3V3c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v1H4c-1.1 0-2 .9-2 2v2h2v14c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8h2V6c0-1.1-.9-2-2-2zm-6 0H10V2h4v2zm-5 20H5v-1h2v1zm8 0h-2v-1h2v1zm-4 0h-2v-1h2v1z"/></svg>`;
+            deleteButton.onclick = () => deleteFood(index);
+            li.appendChild(deleteButton);
+            foodListElement.appendChild(li);
+        });
+    }
+
+    function updateTotals() {
+        totalKE = foodList.reduce((sum, food) => sum + food.amount, 0);
+        totalWeight = foodList.reduce((sum, food) => sum + food.totalWeight, 0);
+
+        document.getElementById("totalKEBox").textContent = `Gesamt KE: ${totalKE.toFixed(2)} KE`;
+        document.getElementById("totalWeightBox").textContent = `Gesamtgewicht: ${totalWeight} g`;
+        document.getElementById("portionSize").textContent = foodList.length;
+        document.getElementById("portionLabel").style.display = foodList.length > 0 ? 'block' : 'none';
+    }
+
+    function deleteFood(index) {
+        foodList.splice(index, 1);
+        updateFoodList();
+        updateTotals();
+    }
+
+    function showSuggestions() {
+        const input = document.getElementById("foodSearch").value;
+        const suggestions = Object.keys(foodData).filter(food => food.toLowerCase().includes(input.toLowerCase()));
+        const foodSuggestionsBox = document.getElementById("foodSuggestions");
+        foodSuggestionsBox.innerHTML = "";
+
+        if (suggestions.length > 0) {
+            suggestions.forEach(food => {
+                const div = document.createElement("div");
+                div.textContent = food;
+                div.onclick = () => {
+                    document.getElementById("foodSearch").value = food;
+                    foodSuggestionsBox.innerHTML = "";
+                };
+                foodSuggestionsBox.appendChild(div);
+            });
+            foodSuggestionsBox.style.display = "block";
+        } else {
+            foodSuggestionsBox.style.display = "none";
+        }
+    }
+</script>
+
+</body>
+</html>
