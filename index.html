@@ -13,17 +13,17 @@
             color: #f4f4f4;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Elemente nach oben ausrichten */
+            align-items: flex-start; 
             height: 100vh;
             overflow: hidden; 
-            background-color: #222; /* Dunklerer Hintergrund */
+            background-color: #222; 
         }
 
         .container {
             max-width: 600px; 
             width: 100%;
             height: 70%;
-            background: #1e1e1e; /* Container-Hintergrund bleibt dunkel */
+            background: #1e1e1e; 
             padding: 30px;
             border-radius: 20px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -34,7 +34,7 @@
             position: relative;
             margin-top: 20px;
             overflow: auto; 
-            margin-top: 20px; /* Abstand nach oben */
+            margin-top: 20px;
         }
 
         h2 {
@@ -72,11 +72,11 @@
 
         input:focus, button:focus {
             outline: none;
-            box-shadow: 0 0 5px #778899;
+            box-shadow: 0 0 5px #8EE5EE;
         }
 
         button {
-            background-color: #778899;
+            background-color: #8EE5EE;
             color: white;
             cursor: pointer;
             transition: background-color 0.3s ease;
@@ -90,25 +90,25 @@
         }
 
         #foodSuggestions {
-            max-height: 120px; /* Maximale Höhe des Vorschlagsfeldes */
+            max-height: 120px;
             background-color: #333;
-            width: 100%; /* Vorschlagsfeld auf die volle Breite setzen */
+            width: 100%;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             z-index: 1000;
             display: none;
             color: #f4f4f4;
             font-weight: 700;
-            overflow: hidden; /* Scrollbalken entfernt */
-            position: absolute; /* Positionierung für bessere Kontrolle */
-            top: calc(50px + var(--offset)); /* Dynamische Position */
-            left: 0; /* Ausrichtung zur linken Seite */
+            overflow: hidden;
+            position: absolute;
+            top: calc(50px + var(--offset));
+            left: 0;
             padding: 0;
-            top: 221px; /* Kein Padding */
+            top: 221px;
         }
 
         #foodSuggestions div {
-            padding: 10px; /* Innenabstand für Vorschläge */
+            padding: 10px;
             cursor: pointer;
             transition: background-color 0.2s ease;
             font-size: 20px;
